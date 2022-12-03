@@ -43,4 +43,8 @@ github.com/hanyuancheung/gpt-go v0.1.0 h1:O27d2rcVU03u3hiLWNaOoe6UbpUFujHSVTvqyr
 github.com/hanyuancheung/gpt-go v0.1.0/go.mod h1:aLG8FXFCbY6BLOGJnjMboGftARjZG1iVfcQVyopHTqA=
 github.com/jackmordaunt/icns v0.0.0-20181231085925-4f16af745526/go.mod h1:UQkeMHVoNcyXYq9otUupF7/h/2tmHlhrS2zw7ZVvUqc=
 github.com/jeandeaual/go-locale v0.0.0-20220711133428-7de61946b173 h1:jOONCXyzHWM+ukp+weX77o//U3pMeOj62CNxChJLxIU=
-github.com/jeandeaual/go-locale v0.0.0-20220711133428-7de61946b173/go.mod h1:uO/uctjf8AcWhNfp
+github.com/jeandeaual/go-locale v0.0.0-20220711133428-7de61946b173/go.mod h1:uO/uctjf8AcWhNfp5Ili6oPtyFrAoQXEtVY3N798VkQ=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
+github.com/josephspurrier/goversioninfo v0.0.0-20200309025242-14b0ab84c6ca/go.mod h1:eJTEwMjXb7kZ633hO3Ln9mBUCOjX2+FlTljvpl9SYdE=
+g
