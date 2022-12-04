@@ -52,4 +52,7 @@ github.com/kr/text v0.1.0/go.mod h1:4Jbv+DJW3UT/LiOwJeYQe1efqtUx/iVham/4vfdArNI=
 github.com/linexjlin/systray-icons v0.0.0-20230727135833-057b4185c255 h1:lujUJMBPuC57eT3qbXOuSRZm8kmwp41jkOzWlFmUTb8=
 github.com/linexjlin/systray-icons v0.0.0-20230727135833-057b4185c255/go.mod h1:205ZG9XgCnr3bg4kRrX1p9oKCSqPsOAHPkN6R2MqLJA=
 github.com/lucor/goinfo v0.0.0-20200401173949-526b5363a13a/go.mod h1:ORP3/rB5IsulLEBwQZCJyyV6niqmI7P4EWSmkug+1Ng=
-github.com/lxn/walk v0.0.0-20210112085537-c389da54e794/go.mod h1:E23UucZGqpuUANJooIbHWCufXvOcT6E
+github.com/lxn/walk v0.0.0-20210112085537-c389da54e794/go.mod h1:E23UucZGqpuUANJooIbHWCufXvOcT6E7Stq81gU+CSQ=
+github.com/lxn/win v0.0.0-20210218163916-a377121e959e h1:H+t6A/QJMbhCSEH5rAuRxh+CtW96g0Or0Fxa9IKr4uc=
+github.com/lxn/win v0.0.0-20210218163916-a377121e959e/go.mod h1:KxxjdtRkfNoYDCUP5ryK7XJJNTnpC8atvtmTheChOtk=
+github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod h1:jpp1/29i3P1S/RLdc7JQKbRpFeM1dOBd8T9ki
