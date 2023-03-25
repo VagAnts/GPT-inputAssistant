@@ -38,4 +38,26 @@
         "role": "system",
         "content": "Translate all the messages I give you into English"
       }
-   
+    ],
+    "maxContext": 1
+  }
+```
+## Automatic reply 自动回复
+```json
+{
+    "name":"自动回复",
+    "model": "gpt-3.5-turbo-0613",
+    "headMessages": [
+      {
+        "role": "system",
+        "content": "下面是我收的消息，帮我用礼貌的方式回复它"
+      }
+    ],
+    "maxContext": 6
+  }
+```
+
+## Summary of the article 总结文章
+```json
+{
+    "name":"总结文
