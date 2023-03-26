@@ -78,4 +78,17 @@ Not only for reading comprehension, it can also be used for code completion and 
 
 ```json
 {
-  
+    "name": "完型填空",
+    "model": "gpt-3.5-turbo-0613",
+    "headMessages": [
+      {
+        "role": "system",
+        "content": "Cloze Test. Do not explain."
+      },
+      {
+        "role": "user",
+        "content": "填上合适的句子\n君不见黄河之水天上来，_\n君不见高堂明镜悲白发，\n朝如青丝暮成雪。"
+      },
+      {
+        "role": "assistant",
+        "content": "奔流到海不复回。"
