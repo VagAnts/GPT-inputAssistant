@@ -115,3 +115,153 @@ func onReady() {
 
 	mManager := systray.AddMenuItem(UText("Manage Prompts"), UText("Modify, Delete prompts"))
 	go func() {
+		for {
+			<-mManager.ClickedCh
+			open.Start("prompts")
+		}
+	}()
+
+	mImport := systray.AddMenuItem(UText("Import"), UText("Import a prompt from clipboard"))
+
+	mClearContext := systray.AddMenuItem(UText("Clear Context"), UText("Clear Context"))
+	_mClearContextSetTitle = mClearContext.SetTitle
+	go func() {
+		for {
+			select {
+			case <-mClearContext.ClickedCh:
+				fmt.Println("Clear Context")
+				clearContext()
+			}
+		}
+	}()
+
+	systray.SetTemplateIcon(icon.Data, icon.Data)
+	//	systray.SetTitle(UText("InputGPT"))
+	systray.SetTooltip(UText("InputGPT a Helpful input Assistant"))
+
+	systray.AddSeparator()
+
+	var maskMenus []*systray.MenuItem
+	masks := getMasks()
+
+	masks = append(masks, UText("Default"))
+	maskCnt := 0
+
+	for i, msk := range masks {
+		m := systray.AddMenuItemCheckbox(fmt.Sprintf("%s", msk), UText("Select this prompt"), false)
+		filepath := fmt.Sprintf("prompts/%s.json", msk)
+		mk := msk
+		if i == len(masks)-1 {
+			m.Check()
+			filepath = ""
+		}
+		idx := i
+		maskCnt = i
+		go func() {
+			for {
+				select {
+				case <-m.ClickedCh:
+					fmt.Println(idx, filepath, mk)
+					if filepath == "" {
+						g_userSetting.initUserSetting()
+					} else {
+						if p, e := loadPrompt(filepath); e != nil {
+							fmt.Println(e)
+							continue
+						} else {
+							g_userSetting.initUserSetting() // reset all user settings
+
+							g_userSetting.headMessages = p.HeadMessages
+							if p.Model != "" {
+								g_userSetting.model = p.Model
+							}
+
+							g_userSetting.maxConext = p.MaxContext
+
+							clearContext()
+							updateClearContextTitle(0)
+							g_userSetting.mask = mk
+						}
+					}
+
+					for ii, mm := range maskMenus {
+						if ii == idx {
+							mm.Check()
+						} else {
+							mm.Uncheck()
+						}
+					}
+				}
+			}
+		}()
+		maskMenus = append(maskMenus, m)
+	}
+
+	// Handling import events
+	go func() {
+		for {
+			select {
+			case <-mImport.ClickedCh:
+				fmt.Println(UText("Import"))
+				clipboardContent, err := clipboard.ReadAll()
+				if err != nil {
+					fmt.Println("Failed to read clipboard content:", err)
+				} else {
+					fmt.Println(clipboardContent)
+					if p, e := parsePrompt(clipboardContent); e != nil {
+						fmt.Println(e)
+					} else {
+						if p.Name != "" {
+							promptFilePath := fmt.Sprintf("prompts/%s.json", p.Name)
+							if _, err := os.Stat(promptFilePath); err == nil {
+								fmt.Println("File exists.", promptFilePath)
+							} else {
+								fmt.Println("create new", promptFilePath)
+								m := systray.AddMenuItemCheckbox(fmt.Sprintf("%s", p.Name), "Check Me", false)
+								maskCnt++
+								idx := maskCnt
+								go func() {
+									for {
+										<-m.ClickedCh
+										g_userSetting.initUserSetting() // reset all user settings
+										g_userSetting.headMessages = p.HeadMessages
+										if p.Model != "" {
+											g_userSetting.model = p.Model
+										}
+
+										if p.MaxContext != 0 {
+											g_userSetting.maxConext = p.MaxContext
+										}
+
+										clearContext()
+										updateClearContextTitle(0)
+										g_userSetting.mask = p.Name
+
+										for ii, mm := range maskMenus {
+											if ii == idx {
+												mm.Check()
+											} else {
+												mm.Uncheck()
+											}
+										}
+									}
+								}()
+								maskMenus = append(maskMenus, m)
+							}
+							savePrompt(p, promptFilePath)
+						}
+					}
+				}
+			}
+		}
+	}()
+
+	updateClearContextTitle(0)
+	updateHotKeyTitle(fmt.Sprintf(UText("Copy the question then click \"%s\" to query GPT"), strings.ToUpper(strings.Join(getGPTHotkeys(), "+"))))
+}
+
+func clearContext() {
+	fmt.Println("clean all context")
+	g_userSetting.histMessages = g_userSetting.histMessages[:0]
+	updateClearContextTitle(0)
+}
